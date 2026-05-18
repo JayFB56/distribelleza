@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DISTRIBELLEZA C&amp;J 🌼 | Catálogo de Belleza</title>
+<meta name="description" content="Catálogo de productos de belleza en Esmeraldas: cremas Skala, cuidado capilar, mascarillas faciales y perfumería."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "on-surface-variant":        "#524345",
+          "primary":                   "#8b4c56",
+          "on-secondary-fixed":        "#261900",
+          "inverse-surface":           "#382e2e",
+          "outline":                   "#847374",
+          "on-primary-container":      "#5e2732",
+          "outline-variant":           "#d7c1c3",
+          "error":                     "#ba1a1a",
+          "secondary-fixed-dim":       "#e9c176",
+          "secondary-container":       "#fed488",
+          "inverse-primary":           "#ffb2bd",
+          "primary-fixed":             "#ffd9dd",
+          "inverse-on-surface":        "#feedec",
+          "on-surface":                "#221a1a",
+          "secondary-fixed":           "#ffdea5",
+          "on-error-container":        "#93000a",
+          "surface-container":         "#fbeae9",
+          "on-secondary":              "#ffffff",
+          "error-container":           "#ffdad6",
+          "surface-bright":            "#fff8f7",
+          "surface-container-highest": "#efdfde",
+          "surface-tint":              "#8b4c56",
+          "on-background":             "#221a1a",
+          "surface-container-low":     "#fff0f0",
+          "surface-dim":               "#e7d6d6",
+          "on-error":                  "#ffffff",
+          "primary-fixed-dim":         "#ffb2bd",
+          "on-tertiary":               "#ffffff",
+          "primary-container":         "#d98e99",
+          "on-primary":                "#ffffff",
+          "surface-container-lowest":  "#ffffff",
+          "background":                "#fff8f7",
+          "tertiary-container":        "#ada0a1",
+          "surface":                   "#fff8f7",
+          "on-secondary-container":    "#785a1a",
+          "tertiary":                  "#665c5d",
+          "surface-variant":           "#efdfde",
+          "on-primary-fixed":          "#380a15",
+          "on-primary-fixed-variant":  "#6e353f",
+          "gold":                      "#785a1a"
+        },
+        borderRadius: {
+          DEFAULT: "0.125rem",
+          lg:      "0.25rem",
+          xl:      "0.5rem",
+          "2xl":   "1rem",
+          full:    "9999px"
+        },
+        spacing: {
+          "container-max":    "1280px",
+          "stack-lg":         "32px",
+          "gutter":           "16px",
+          "margin-mobile":    "16px",
+          "margin-desktop":   "80px",
+          "stack-sm":         "8px",
+          "stack-md":         "16px"
+        },
+        fontFamily: {
+          "body-md":            ["Plus Jakarta Sans"],
+          "label-md":           ["Plus Jakarta Sans"],
+          "headline-xl":        ["Playfair Display"],
+          "body-lg":            ["Plus Jakarta Sans"],
+          "headline-lg":        ["Playfair Display"],
+          "headline-md":        ["Playfair Display"],
+          "headline-lg-mobile": ["Playfair Display"],
+          "label-sm":           ["Plus Jakarta Sans"]
+        },
+        fontSize: {
+          "body-md":            ["16px", { lineHeight: "24px",  fontWeight: "400" }],
+          "label-md":           ["14px", { lineHeight: "20px",  letterSpacing: "0.05em", fontWeight: "600" }],
+          "headline-xl":        ["48px", { lineHeight: "56px",  letterSpacing: "-0.02em", fontWeight: "700" }],
+          "body-lg":            ["18px", { lineHeight: "28px",  fontWeight: "400" }],
+          "headline-lg":        ["32px", { lineHeight: "40px",  fontWeight: "600" }],
+          "headline-md":        ["24px", { lineHeight: "32px",  fontWeight: "600" }],
+          "headline-lg-mobile": ["28px", { lineHeight: "36px",  fontWeight: "600" }],
+          "label-sm":           ["12px", { lineHeight: "16px",  fontWeight: "500" }]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  /* ── Utilitarios ─────────────────────────────────────── */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  body { min-height: 100dvh; }
+
+  /* ── Animación de tarjetas ───────────────────────────── */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .card-anim { animation: fadeInUp .28s ease both; }
+
+  /* ── Paneles laterales ───────────────────────────────── */
+  .panel-lateral {
+    position: fixed;
+    top: 0; right: 0;
+    width: min(420px, 100vw);
+    height: 100dvh;
+    background: #fff8f7;
+    box-shadow: -8px 0 40px rgba(139,76,86,.15);
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform .35s cubic-bezier(.4,0,.2,1);
+  }
+  .panel-lateral.abierto { transform: translateX(0); }
+
+  /* ── Overlay backdrop ────────────────────────────────── */
+  .backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(34,26,26,.45);
+    backdrop-filter: blur(4px);
+    z-index: 55;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+  }
+  .backdrop.visible { opacity: 1; pointer-events: auto; }
+
+  /* ── Botón corazón activo ────────────────────────────── */
+  .btn-fav.activo .icono-fav {
+    font-variation-settings: 'FILL' 1;
+    color: #8b4c56;
+  }
+
+  /* ── Toast ───────────────────────────────────────────── */
+  @keyframes toastIn {
+    from { opacity:0; transform: translateY(16px) scale(.95); }
+    to   { opacity:1; transform: translateY(0) scale(1); }
+  }
+  .toast {
+    animation: toastIn .3s ease both;
+  }
+</style>
+</head>
+
+<body class="bg-surface text-on-surface antialiased pb-20 md:pb-0 font-body-md">
+
+<!-- ═══════════════════════════════════════════════════════
+     BACKDROP (compartido entre paneles)
+     ═══════════════════════════════════════════════════════ -->
+<div id="backdrop" class="backdrop" onclick="cerrarTodosLosPaneles()"></div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PANEL CARRITO
+     ═══════════════════════════════════════════════════════ -->
+<aside id="panel-carrito" class="panel-lateral" aria-label="Carrito de compras">
+  <!-- Cabecera -->
+  <div class="flex items-center gap-3 px-5 py-4 border-b border-outline-variant/30 shrink-0">
+    <button onclick="cerrarPanel('panel-carrito')" aria-label="Cerrar carrito"
+      class="w-9 h-9 rounded-full flex items-center justify-center hover:bg-surface-variant transition-colors">
+      <span class="material-symbols-outlined text-on-surface-variant">arrow_back</span>
+    </button>
+    <h2 class="font-headline-md text-headline-md text-primary flex-1">Mi Carrito</h2>
+    <button onclick="vaciarCarrito()" title="Vaciar carrito"
+      class="text-[13px] text-on-surface-variant/60 hover:text-error transition-colors underline underline-offset-2">
+      Vaciar
+    </button>
+  </div>
+
+  <!-- Lista de ítems -->
+  <div id="lista-carrito" class="flex-1 overflow-y-auto p-4 no-scrollbar space-y-3">
+    <!-- Se rellena por JS -->
+  </div>
+
+  <!-- Footer: total + botón WhatsApp -->
+  <div id="footer-carrito" class="shrink-0 px-5 py-4 border-t border-outline-variant/20 space-y-3">
+    <div class="flex justify-between items-center">
+      <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Total estimado</span>
+      <span id="total-carrito" class="font-headline-md text-headline-md text-gold">$0.00</span>
+    </div>
+    <button onclick="enviarPedidoWhatsApp()"
+      class="w-full flex items-center justify-center gap-2 bg-[#25D366] text-white font-label-md text-label-md py-3.5 rounded-full shadow-md hover:brightness-95 active:scale-95 transition-all">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      Pedir por WhatsApp
+    </button>
+  </div>
+</aside>
+
+<!-- ═══════════════════════════════════════════════════════
+     PANEL FAVORITOS
+     ═══════════════════════════════════════════════════════ -->
+<aside id="panel-favoritos" class="panel-lateral" aria-label="Favoritos">
+  <!-- Cabecera -->
+  <div class="flex items-center gap-3 px-5 py-4 border-b border-outline-variant/30 shrink-0">
+    <button onclick="cerrarPanel('panel-favoritos')" aria-label="Cerrar favoritos"
+      class="w-9 h-9 rounded-full flex items-center justify-center hover:bg-surface-variant transition-colors">
+      <span class="material-symbols-outlined text-on-surface-variant">arrow_back</span>
+    </button>
+    <h2 class="font-headline-md text-headline-md text-primary flex-1">Mis Favoritos</h2>
+    <span id="contador-favoritos-panel" class="font-label-sm text-label-sm text-on-surface-variant/60"></span>
+  </div>
+
+  <!-- Grilla de favoritos -->
+  <div id="lista-favoritos" class="flex-1 overflow-y-auto p-4 no-scrollbar">
+    <!-- Se rellena por JS -->
+  </div>
+</aside>
+
+<!-- ═══════════════════════════════════════════════════════
+     HEADER / TOP APP BAR
+     ═══════════════════════════════════════════════════════ -->
+<header class="w-full top-0 sticky bg-surface/90 backdrop-blur-md z-30 shadow-sm border-b border-outline-variant/20">
+  <div class="flex items-center px-margin-mobile md:px-margin-desktop py-3.5 w-full max-w-container-max mx-auto gap-2">
+
+    <!-- Logo -->
+    <div class="flex flex-col items-center flex-1 justify-center">
+      <h1 class="font-headline-md text-headline-md tracking-tight text-primary leading-tight">DISTRIBELLEZA C&amp;J 🌼</h1>
+      <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mt-0.5">Catálogo · Esmeraldas</p>
+    </div>
+
+    <!-- Buscador -->
+    <button id="btn-abrir-busqueda" aria-label="Buscar"
+      class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-surface-variant/60 transition-colors shrink-0">
+      <span class="material-symbols-outlined text-primary">search</span>
+    </button>
+
+    <!-- Modo Admin -->
+    <button id="btn-abrir-admin" aria-label="Admin" onclick="abrirModalAdmin()"
+      class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-surface-variant/60 transition-colors shrink-0">
+      <span class="material-symbols-outlined text-primary">person</span>
+    </button>
+
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════
+     MODAL DE BÚSQUEDA
+     ═══════════════════════════════════════════════════════ -->
+<div id="buscador-modal"
+  class="hidden fixed inset-0 z-50 items-start justify-center pt-16 px-4 bg-on-surface/30 backdrop-blur-sm">
+  <div class="w-full max-w-lg bg-surface-container-lowest rounded-2xl shadow-2xl p-4 flex items-center gap-3 border border-outline-variant/30">
+    <span class="material-symbols-outlined text-primary shrink-0">search</span>
+    <input id="input-busqueda" type="search" placeholder="Buscar productos..." autocomplete="off"
+      class="flex-1 bg-transparent outline-none font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/50"/>
+    <button id="btn-cerrar-busqueda" aria-label="Cerrar"
+      class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-variant transition-colors">
+      <span class="material-symbols-outlined text-on-surface-variant" style="font-size:20px">close</span>
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     MODAL DE ADMIN PIN
+     ═══════════════════════════════════════════════════════ -->
+<div id="admin-modal"
+  class="hidden fixed inset-0 z-50 items-center justify-center px-4 bg-on-surface/30 backdrop-blur-sm">
+  <div class="w-full max-w-sm bg-surface-container-lowest rounded-2xl shadow-2xl p-6 flex flex-col gap-4 border border-outline-variant/30">
+    <h3 class="font-headline-md text-headline-md text-primary text-center">Acceso Administrador</h3>
+    <p class="font-body-md text-body-md text-on-surface-variant text-center">Ingresa el PIN de 3 dígitos</p>
+    <input id="input-pin" type="password" maxlength="3" placeholder="***" autocomplete="off"
+      class="w-24 mx-auto text-center bg-surface-container-low border border-outline-variant/50 rounded-lg py-2 font-headline-md text-on-surface outline-none focus:border-primary"/>
+    <p id="admin-error" class="text-error font-label-sm text-center hidden">PIN incorrecto</p>
+    <div class="flex gap-3 justify-end mt-2">
+      <button onclick="cerrarModalAdmin()" class="px-4 py-2 font-label-md text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors">Cancelar</button>
+      <button onclick="verificarPin()" class="px-4 py-2 font-label-md bg-primary text-on-primary rounded-full shadow-md active:scale-95 transition-all">Ingresar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     TOOLBAR MODO EDICIÓN
+     ═══════════════════════════════════════════════════════ -->
+<div id="toolbar-edicion" class="hidden fixed bottom-0 left-0 w-full z-[60] bg-surface/95 backdrop-blur-lg border-t border-outline-variant/20 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] p-4 flex-col sm:flex-row gap-3 items-center justify-between">
+  <span class="font-label-md text-primary flex items-center gap-2">
+    <span class="material-symbols-outlined">edit</span> Modo Edición Activo
+  </span>
+  <div class="flex items-center gap-2 w-full sm:w-auto">
+    <button onclick="borrarTodoEdicion()" class="flex-1 sm:flex-none px-4 py-2 rounded-full font-label-md text-error hover:bg-error/10 transition-colors">Borrar todo</button>
+    <button onclick="cancelarEdicion()" class="flex-1 sm:flex-none px-4 py-2 rounded-full font-label-md text-on-surface-variant hover:bg-surface-variant transition-colors">Cancelar</button>
+    <button onclick="guardarEdicion()" class="flex-1 sm:flex-none px-4 py-2 rounded-full font-label-md bg-primary text-on-primary shadow-md active:scale-95 transition-transform">Guardar</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CONTENIDO PRINCIPAL
+     ═══════════════════════════════════════════════════════ -->
+<main class="max-w-container-max mx-auto pb-6">
+
+  <!-- Pills de categoría -->
+  <section class="w-full overflow-x-auto no-scrollbar py-5 px-margin-mobile" aria-label="Filtros de categoría">
+    <div class="flex gap-2.5 w-max">
+
+      <button class="btn-filtro px-5 py-2 rounded-full font-label-md text-label-md bg-primary text-on-primary shadow-md active:scale-95 transition-all duration-200"
+        data-categoria="Todos">Todos</button>
+
+      <button class="btn-filtro px-5 py-2 rounded-full font-label-md text-label-md bg-surface-container-highest text-on-surface hover:text-primary transition-all duration-200"
+        data-categoria="Cremas Skala">Cremas Skala</button>
+
+      <button class="btn-filtro px-5 py-2 rounded-full font-label-md text-label-md bg-surface-container-highest text-on-surface hover:text-primary transition-all duration-200"
+        data-categoria="Cuidado Capilar">Cuidado Capilar</button>
+
+      <button class="btn-filtro px-5 py-2 rounded-full font-label-md text-label-md bg-surface-container-highest text-on-surface hover:text-primary transition-all duration-200"
+        data-categoria="Mascarillas Faciales">Mascarillas Faciales</button>
+
+      <button class="btn-filtro px-5 py-2 rounded-full font-label-md text-label-md bg-surface-container-highest text-on-surface hover:text-primary transition-all duration-200"
+        data-categoria="Perfumería">Perfumería</button>
+
+    </div>
+  </section>
+
+  <!-- Grilla de productos — rellena dinámicamente -->
+  <section id="contenedor-productos" aria-label="Catálogo de productos"
+    class="grid grid-cols-2 gap-gutter px-margin-mobile md:grid-cols-3 lg:grid-cols-4">
+  </section>
+
+</main>
+
+<!-- ═══════════════════════════════════════════════════════
+     FAB — Abre panel carrito
+     ═══════════════════════════════════════════════════════ -->
+<button id="fab-carrito" aria-label="Ver carrito"
+  onclick="abrirPanel('panel-carrito')"
+  class="fixed bottom-24 right-4 md:bottom-8 md:right-8 w-14 h-14 bg-primary text-on-primary rounded-full shadow-xl flex items-center justify-center z-40 hover:scale-110 transition-transform duration-300">
+  <span class="material-symbols-outlined">shopping_cart</span>
+  <div id="carrito-badge" style="display:none"
+    class="absolute -top-1 -right-1 w-6 h-6 bg-[#ffdea5] text-[#261900] rounded-full flex items-center justify-center font-label-sm text-label-sm border-2 border-surface font-bold">
+    0
+  </div>
+</button>
+
+<!-- ═══════════════════════════════════════════════════════
+     TOAST (notificación flotante)
+     ═══════════════════════════════════════════════════════ -->
+<div id="toast" class="hidden fixed bottom-28 left-1/2 -translate-x-1/2 z-[70]">
+  <div class="toast bg-inverse-surface text-inverse-on-surface px-5 py-2.5 rounded-full font-label-md text-label-md shadow-xl whitespace-nowrap flex items-center gap-2">
+    <span id="toast-icon" class="material-symbols-outlined text-[18px]">check_circle</span>
+    <span id="toast-texto">Añadido al carrito</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     BARRA DE NAVEGACIÓN INFERIOR (solo móvil)
+     ═══════════════════════════════════════════════════════ -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-2 py-2.5 bg-surface/95 backdrop-blur-lg shadow-[0_-2px_20px_rgba(139,76,86,.12)] z-50 rounded-t-2xl border-t border-outline-variant/20"
+  aria-label="Navegación principal">
+
+  <!-- Inicio -->
+  <button id="nav-inicio" onclick="irInicio()"
+    class="nav-btn flex flex-col items-center justify-center gap-0.5 px-5 py-1.5 rounded-full transition-all duration-200 text-primary bg-primary-fixed/40">
+    <span class="material-symbols-outlined nav-icon" style="font-variation-settings:'FILL' 1; font-size:22px">storefront</span>
+    <span class="font-label-sm text-label-sm">Inicio</span>
+  </button>
+
+  <!-- Favoritos -->
+  <button id="nav-favoritos" onclick="abrirPanel('panel-favoritos')"
+    class="nav-btn relative flex flex-col items-center justify-center gap-0.5 px-5 py-1.5 rounded-full transition-all duration-200 text-on-surface-variant/70 hover:text-primary">
+    <span class="material-symbols-outlined nav-icon" style="font-size:22px">favorite</span>
+    <span class="font-label-sm text-label-sm">Favoritos</span>
+    <div id="fav-badge-nav" style="display:none"
+      class="absolute top-0.5 right-3 w-4 h-4 bg-primary text-on-primary rounded-full flex items-center justify-center text-[10px] font-bold border border-surface">0</div>
+  </button>
+
+  <!-- Carrito -->
+  <button id="nav-carrito" onclick="abrirPanel('panel-carrito')"
+    class="nav-btn relative flex flex-col items-center justify-center gap-0.5 px-5 py-1.5 rounded-full transition-all duration-200 text-on-surface-variant/70 hover:text-primary">
+    <span class="material-symbols-outlined nav-icon" style="font-size:22px">shopping_bag</span>
+    <span class="font-label-sm text-label-sm">Carrito</span>
+    <div id="carrito-badge-nav" style="display:none"
+      class="absolute top-0.5 right-3 w-4 h-4 bg-primary text-on-primary rounded-full flex items-center justify-center text-[10px] font-bold border border-surface">0</div>
+  </button>
+
+</nav>
+
+<script src="productos.js"></script>
+</body>
+</html>

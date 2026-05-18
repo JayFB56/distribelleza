@@ -1,0 +1,17 @@
+{
+  "name": "cata",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "escanear_catalogo.js",
+  "scripts": {
+    "iniciar": "node escanear_catalogo.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/genai": "^2.3.0",
+    "dotenv": "^17.4.2"
+  }
+}
